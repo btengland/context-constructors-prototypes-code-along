@@ -10,10 +10,10 @@
 let user = {
 	username: "bencallis",
 	email: "bencallis1@gmail.com",
-    // Code here
+  getUserName: function(){
+    return this.username;
+  }
 };
-
-
 
 ////////// PROBLEM 2 //////////
 
@@ -31,7 +31,7 @@ let user1 = {
 };
 
 const getUsername = function () {
-    // Code here
+  return this.username;
 };
 
 const username = getUsername.call(user1);
@@ -56,9 +56,7 @@ function getOtherUsername() {
 	return this.username;
 };
 
-// Code here
-
-
+const otherUsername = getOtherUsername.call(user2)
 
 ////////// PROBLEM 4 //////////
 
@@ -72,8 +70,8 @@ function getOtherUsername() {
 */
 
 // Code here
-
-
+const username1 = getOtherUsername.call(user1);
+const username2 = getOtherUsername.call(user2);
 
 ////////// PROBLEM 5 //////////
 
@@ -94,7 +92,7 @@ function add(a, b, c) {
 }
 
 // Code here
-
+const result = add.apply(obj, nums);
 
 
 ////////// PROBLEM 6 //////////
@@ -116,7 +114,7 @@ const getName = function () {
 };
 
 // Code here
-
+const name = getName.bind(favRapper)
 
 
 ////////// PROBLEM 7 //////////
@@ -130,6 +128,9 @@ const getName = function () {
 
 function Car (color, make, year){
     // Code here
+    this.color = color;
+    this.make = make;
+    this.year = year;
 }
 
 
@@ -147,9 +148,12 @@ function CarMaker (make, model, year) {
 	this.make = make;
 	this.model = model;
 	this.year = year;
-    this.move = 0;
+  this.move = 0;
     
     // Code here
+  this.moveCar = function(){
+    this.move += 10
+  }
 };
 
 
@@ -166,7 +170,16 @@ function CarMaker (make, model, year) {
 */
 
 // Code here
-
+function Player(name, age, team, pointsScored){
+  this.name = name;
+  this.age = age;
+  this.team = team;
+  this.pointsScored = pointsScored;
+   
+  this.addPoints = function(num){
+    return this.pointsScored += num;
+  }
+}
 
 
 ////////// PROBLEM 10 //////////
@@ -183,14 +196,16 @@ function Restaurant(name, type, stars) {
 	this.type = type;
     this.stars = stars;
     
-    this.addStars = function (num) {
-        this.stars += num;
-        return this.stars;
-    };
+    // this.addStars = function (num) {
+    //     this.stars += num;
+    //     return this.stars;
+    // };
 }
 
 // Code here
-
+Restaurant.prototype.addStars = function (num){
+  return this.stars += num;
+}
 
 
 ////////// PROBLEM 11 //////////
@@ -215,7 +230,14 @@ function Person(name, age, hometown, email, friends) {
 }
 
 // Code here
+Person.prototype.addFriend = function(newFriend){
+  this.friends.push(newFriend)
+}
 
+personalbar.prototype.removeFriend = function(badFriend){
+  let index = this.friends.findIndex(element => element === badFriend);
+  this.friends.splice(index, 1);
+}
 
 
 ////////// PROBLEM 12 //////////
@@ -235,8 +257,17 @@ function Person(name, age, hometown, email, friends) {
 */
 
 // Code here
+function User(name, age, email, savedPosts){
+  this.name = name;
+  this.age = age;
+  this.email = email;
+  this.savedPosts = savedPosts;
+}
 
-
+User.prototype.addSavedPost = function(id, title, rating){
+  let newPost = {id, title, rating}
+  this.savedPosts.push(newPost)
+}
 
 ////////// PROBLEM 13 //////////
 
@@ -248,7 +279,10 @@ function Person(name, age, hometown, email, friends) {
 */
 
 // Code here
-
+User.prototype.removeSavedPost = function(postId){
+  let index = this.savedPosts.findIndex( elem => elem.id === postId);
+  this.savedPosts.splice(index, 1)
+}
 
 
 ////////// PROBLEM 14 //////////
@@ -261,3 +295,7 @@ function Person(name, age, hometown, email, friends) {
 */
 
 // Code here
+User.prototype.changePostRating = function(id, newRating) {
+  let index = this.savedPosts.findIndex( elem => elem.id === id);
+  this.savedPosts[index].rating = newRating
+}
